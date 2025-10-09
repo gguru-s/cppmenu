@@ -18,7 +18,7 @@ void MyWindow::on_click(int n_press, double x, double y) {
     if (!(x >= gx && x <= gx + gw && y >= gy && y <= gy + gh)) {
         close();
     }
-    // inside grid => do nothing, let widgets handle events
+    // clicks inside grid => do nothing, let widgets handle events
 }
 
 MyWindow::MyWindow() {

@@ -4,24 +4,23 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 project(cppmenu)
 
-set(GTK_LAYER_SHELL_INCLUDE_DIR "/usr/include/gtk4-layer-shell/")
-set(GTK_LAYER_SHELL_LIBRARY "/usr/lib/libgtk4-layer-shell.so")
-file(GLOB_RECURSE SRCFILES CONFIGURE_DEPENDS "src/*.cpp" "include/*.hpp")
+file(GLOB_RECURSE SRCFILES CONFIGURE_DEPENDS "src/*.cpp")
 
 add_executable(cppmenu ${SRCFILES})
-target_include_directories(cppmenu PUBLIC
-	"${PROJECT_BINARY_DIR}")
 
 find_package(PkgConfig REQUIRED)
 
-# List of required packages
 set(REQUIRED_PACKAGES
+gtk4-layer-shell-0
 gtkmm-4.0)
 
 pkg_check_modules(DEPS REQUIRED ${REQUIRED_PACKAGES})
 
-include_directories(${DEPS_INCLUDE_DIRS}
-${GTK_LAYER_SHELL_INCLUDE_DIR}
-"./include/")
-target_link_libraries(cppmenu ${DEPS_LIBRARIES}
-${GTK_LAYER_SHELL_LIBRARY})
+target_include_directories(cppmenu PRIVATE
+"./include/"
+${DEPS_INCLUDE_DIRS}
+)
+
+target_link_libraries(cppmenu
+	${DEPS_LIBRARIES}
+)
